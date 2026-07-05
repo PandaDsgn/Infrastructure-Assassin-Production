@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { API_BASE_URL } from "../firebase";
 
 export default function InboxModal({ isOpen, kind, onClose, userRole }) {
   const [requests, setRequests] = useState([]);
@@ -10,7 +11,7 @@ export default function InboxModal({ isOpen, kind, onClose, userRole }) {
       const token = sessionStorage.getItem("aegis_token");
       const endpoint =
         kind === "incoming" ? "/api/approvals" : "/api/requests/outgoing";
-      const res = await fetch(`${endpoint}?t=${Date.now()}`, {
+      const res = await fetch(`${API_BASE_URL}${endpoint}?t=${Date.now()}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
@@ -31,7 +32,7 @@ export default function InboxModal({ isOpen, kind, onClose, userRole }) {
   const handleResolve = async (id, decision) => {
     try {
       const token = sessionStorage.getItem("aegis_token");
-      const res = await fetch("/api/approvals/resolve", {
+      const res = await fetch(`${API_BASE_URL}/api/approvals/resolve`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

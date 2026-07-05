@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ResourceCard from "./ResourceCard";
-import { getAuth } from "../firebase";
+import { getAuth, API_BASE_URL } from "../firebase";
 import AdminPanel from "./AdminPanel";
 
 export default function Dashboard({
@@ -17,7 +17,7 @@ export default function Dashboard({
   const fetchAuditData = async () => {
     try {
       const token = sessionStorage.getItem("aegis_token");
-      const res = await fetch("/api/audit?t=" + Date.now(), {
+      const res = await fetch(`${API_BASE_URL}/api/audit?t=${Date.now()}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
@@ -38,7 +38,7 @@ export default function Dashboard({
   const executeSecurityAction = async (actionType, resourceId) => {
     try {
       const token = sessionStorage.getItem("aegis_token");
-      const res = await fetch("/api/action", {
+      const res = await fetch(`${API_BASE_URL}/api/action`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

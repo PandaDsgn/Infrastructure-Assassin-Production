@@ -3,7 +3,7 @@ import "firebase/compat/auth";
 
 let isInitialized = false;
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || "";
+export const API_BASE_URL = import.meta.env.VITE_API_URL || "";
 
 export const initFirebase = async () => {
   if (isInitialized) return firebase;

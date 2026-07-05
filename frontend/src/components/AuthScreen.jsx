@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { getAuth } from "../firebase";
+import { getAuth, API_BASE_URL } from "../firebase";
 
 export default function AuthScreen({ onAuthSuccess }) {
   const [isSignUpMode, setIsSignUpMode] = useState(false);
@@ -32,7 +32,7 @@ export default function AuthScreen({ onAuthSuccess }) {
       sessionStorage.setItem("aegis_token", idToken);
 
       if (isSignUpMode) {
-        await fetch("/api/auth/register", {
+        await fetch(`${API_BASE_URL}/api/auth/register`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

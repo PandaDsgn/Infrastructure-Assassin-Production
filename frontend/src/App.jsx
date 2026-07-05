@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getAuth, initFirebase } from "./firebase";
+import { getAuth, initFirebase, API_BASE_URL } from "./firebase";
 import AuthScreen from "./components/AuthScreen";
 import Dashboard from "./components/Dashboard";
 import ChatWidget from "./components/ChatWidget";
@@ -47,7 +47,7 @@ export default function App() {
         const token = await user.getIdToken();
         sessionStorage.setItem("aegis_token", token);
 
-        const res = await fetch("/api/auth/me", {
+        const res = await fetch(`${API_BASE_URL}/api/auth/me`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = await res.json();
@@ -65,7 +65,7 @@ export default function App() {
   const handleLogout = async () => {
     const token = sessionStorage.getItem("aegis_token");
     if (token) {
-      await fetch("/api/chat/clear", {
+      await fetch(`${API_BASE_URL}/api/chat/clear`, {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
       });

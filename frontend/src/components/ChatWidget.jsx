@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { API_BASE_URL } from "../firebase";
 
 export default function ChatWidget({ collapsed, toggleChat }) {
   const [messages, setMessages] = useState([
@@ -22,7 +23,7 @@ export default function ChatWidget({ collapsed, toggleChat }) {
       const token = sessionStorage.getItem("aegis_token");
       if (!token) return;
       try {
-        const res = await fetch("/api/chat/history", {
+        const res = await fetch(`${API_BASE_URL}/api/chat/history`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (res.ok) {
@@ -52,7 +53,7 @@ export default function ChatWidget({ collapsed, toggleChat }) {
 
     try {
       const token = sessionStorage.getItem("aegis_token");
-      const response = await fetch("/api/chat", {
+      const response = await fetch(`${API_BASE_URL}/api/chat`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

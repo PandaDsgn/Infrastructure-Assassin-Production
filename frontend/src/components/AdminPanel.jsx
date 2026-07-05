@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { API_BASE_URL } from "../firebase";
 
 export default function AdminPanel() {
   const [users, setUsers] = useState([]);
@@ -7,7 +8,7 @@ export default function AdminPanel() {
   const fetchUsers = async () => {
     try {
       const token = sessionStorage.getItem("aegis_token");
-      const res = await fetch("/api/users?t=" + Date.now(), {
+      const res = await fetch(`${API_BASE_URL}/api/users?t=${Date.now()}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
@@ -28,7 +29,7 @@ export default function AdminPanel() {
       return;
     try {
       const token = sessionStorage.getItem("aegis_token");
-      const res = await fetch(`/api/users/${uid}`, {
+      const res = await fetch(`${API_BASE_URL}/api/users/${uid}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });
