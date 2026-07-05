@@ -91,7 +91,7 @@ export default function App() {
           color: "var(--text-muted)",
         }}
       >
-        Initializing Secure Uplink...
+        Starting Application <br></br>Please wait till backend service wakes up.
       </div>
     );
   }
