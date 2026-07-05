@@ -3,6 +3,8 @@ import ResourceCard from "./ResourceCard";
 import { getAuth, API_BASE_URL } from "../firebase";
 import AdminPanel from "./AdminPanel";
 
+const OUTGOING_SEEN_KEY = "outgoingInboxLastSeen";
+
 export default function Dashboard({
   userRole,
   userName,
@@ -13,6 +15,8 @@ export default function Dashboard({
   const [resources, setResources] = useState([]);
   const [loading, setLoading] = useState(true);
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+  const [hasPendingApprovals, setHasPendingApprovals] = useState(false);
+  const [hasUnseenOutgoingUpdate, setHasUnseenOutgoingUpdate] = useState(false);
 
   const fetchAuditData = async () => {
     try {
@@ -29,11 +33,56 @@ export default function Dashboard({
     }
   };
 
+  const fetchInboxStatus = async () => {
+    try {
+      const token = sessionStorage.getItem("aegis_token");
+
+      if (userRole === "IT-Director") {
+        const res = await fetch(
+          `${API_BASE_URL}/api/approvals?t=${Date.now()}`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          },
+        );
+        const data = await res.json();
+        setHasPendingApprovals(Array.isArray(data) && data.length > 0);
+      } else {
+        const res = await fetch(
+          `${API_BASE_URL}/api/requests/outgoing?t=${Date.now()}`,
+          { headers: { Authorization: `Bearer ${token}` } },
+        );
+        const data = await res.json();
+        const lastSeen = Number(localStorage.getItem(OUTGOING_SEEN_KEY) || 0);
+        const hasUnseen =
+          Array.isArray(data) &&
+          data.some(
+            (r) =>
+              (r.status === "Approved" || r.status === "Rejected") &&
+              r.resolved_at &&
+              new Date(r.resolved_at).getTime() > lastSeen,
+          );
+        setHasUnseenOutgoingUpdate(hasUnseen);
+      }
+    } catch (err) {
+      console.error("Failed to fetch inbox status", err);
+    }
+  };
+
   useEffect(() => {
     fetchAuditData();
-    const interval = setInterval(fetchAuditData, 15000);
+    fetchInboxStatus();
+    const interval = setInterval(() => {
+      fetchAuditData();
+      fetchInboxStatus();
+    }, 15000);
     return () => clearInterval(interval);
   }, []);
+
+  const handleOpenOutgoing = () => {
+    localStorage.setItem(OUTGOING_SEEN_KEY, Date.now().toString());
+    setHasUnseenOutgoingUpdate(false);
+    openInbox("outgoing");
+  };
 
   const executeSecurityAction = async (actionType, resourceId) => {
     try {
@@ -120,24 +169,25 @@ export default function Dashboard({
                   className="theme-invert-icon"
                   style={{ height: "18px", width: "18px" }}
                 />
-                <span className="badge-dot" id="incoming-inbox-badge"></span>
+                {hasPendingApprovals && (
+                  <span className="badge-dot" id="incoming-inbox-badge"></span>
+                )}
               </button>
             )}
             {userRole !== "IT-Director" && (
-              <button
-                className="icon-btn"
-                onClick={() => openInbox("outgoing")}
-              >
+              <button className="icon-btn" onClick={handleOpenOutgoing}>
                 <img
                   src="https://res.cloudinary.com/dpwmdsj4r/image/upload/v1783199749/outgoing_l7xtol.png"
                   alt="Outgoing"
                   className="theme-invert-icon"
                   style={{ height: "18px", width: "18px" }}
                 />
-                <span
-                  className="badge-dot neutral"
-                  id="outgoing-inbox-badge"
-                ></span>
+                {hasUnseenOutgoingUpdate && (
+                  <span
+                    className="badge-dot neutral"
+                    id="outgoing-inbox-badge"
+                  ></span>
+                )}
               </button>
             )}
           </div>
