@@ -3,6 +3,7 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
+  base: "/Infrastructure-Assassin-Prod/",
   server: {
     proxy: {
       "/api": {
