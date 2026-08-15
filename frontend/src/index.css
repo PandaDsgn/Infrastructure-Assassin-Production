@@ -61,6 +61,7 @@
     --danger: #dc2626;
     --danger-hover: #b91c1c;
     --danger-bg: #fef2f2;
+    --blood-red: #8b0000;
     --success: #059669;
     --success-bg: #ecfdf5;
     --warning: #d97706;
@@ -100,6 +101,7 @@
     --danger: #f87171;
     --danger-hover: #ef4444;
     --danger-bg: rgba(248, 113, 113, 0.12);
+    --blood-red: #c81e1e;
     --success: #34d399;
     --success-bg: rgba(52, 211, 153, 0.12);
     --warning: #fbbf24;
@@ -970,6 +972,59 @@ header h1 {
 }
 .inbox-card:hover {
     border-color: var(--border-strong);
+}
+
+/* --- LANDING / HOMEPAGE --- */
+#landing-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--bg-color);
+    background-image: radial-gradient(var(--border) 1px, transparent 1.5px);
+    background-size: 28px 28px;
+}
+.landing-topbar {
+    display: flex;
+    justify-content: flex-end;
+    padding: var(--space-5) var(--space-6);
+}
+.landing-hero {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: var(--space-8) var(--space-6) calc(var(--space-8) * 3);
+    animation: fadeIn var(--duration-slow) var(--ease-out);
+}
+.landing-hero h1 {
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    letter-spacing: -0.02em;
+    margin-bottom: var(--space-3);
+}
+.text-blood-red {
+    color: var(--blood-red);
+}
+.landing-hero h2 {
+    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+    font-weight: 600;
+    color: var(--text-main);
+    margin-bottom: var(--space-5);
+}
+.landing-hero p {
+    color: var(--text-muted);
+    font-size: var(--text-lg);
+    max-width: 46ch;
+    line-height: 1.6;
+    margin: 0 0 var(--space-8) 0;
+}
+.landing-cta {
+    width: auto;
+    padding: 0.85rem var(--space-8);
+    border-radius: var(--radius-lg);
+    font-size: var(--text-md);
+    margin-top: 0;
 }
 
 /* --- ACCESSIBILITY: respect reduced motion --- */

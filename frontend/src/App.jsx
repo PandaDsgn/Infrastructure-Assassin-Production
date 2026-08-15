@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getAuth, initFirebase, API_BASE_URL } from "./firebase";
+import Homepage from "./components/Homepage";
 import AuthScreen from "./components/AuthScreen";
 import Dashboard from "./components/Dashboard";
 import ChatWidget from "./components/ChatWidget";
@@ -9,6 +10,7 @@ export default function App() {
   const [isFirebaseReady, setIsFirebaseReady] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userProfile, setUserProfile] = useState(null);
+  const [view, setView] = useState("home"); // "home" | "auth"
   const [chatCollapsed, setChatCollapsed] = useState(
     localStorage.getItem("chatCollapsed") === "1",
   );
@@ -71,6 +73,7 @@ export default function App() {
       });
     }
     await getAuth().signOut();
+    setView("home");
   };
 
   const toggleChat = () => {
@@ -97,7 +100,15 @@ export default function App() {
   }
 
   if (!isAuthenticated) {
-    return <AuthScreen onAuthSuccess={() => setIsAuthenticated(true)} />;
+    if (view === "auth") {
+      return (
+        <AuthScreen
+          onAuthSuccess={() => setIsAuthenticated(true)}
+          onBack={() => setView("home")}
+        />
+      );
+    }
+    return <Homepage onEnter={() => setView("auth")} />;
   }
 
   return (

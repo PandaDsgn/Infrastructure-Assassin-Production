@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { getAuth, API_BASE_URL } from "../firebase";
 
-export default function AuthScreen({ onAuthSuccess }) {
+export default function AuthScreen({ onAuthSuccess, onBack }) {
   const [isSignUpMode, setIsSignUpMode] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -53,6 +53,16 @@ export default function AuthScreen({ onAuthSuccess }) {
   return (
     <div id="sso-screen">
       <div className="auth-card">
+        {onBack && (
+          <button
+            type="button"
+            className="btn-logout"
+            style={{ marginBottom: "var(--space-6)" }}
+            onClick={onBack}
+          >
+            ← Back to home
+          </button>
+        )}
         <h2 id="auth-title">
           {isSignUpMode ? "Create Account" : "Welcome Back"}
         </h2>

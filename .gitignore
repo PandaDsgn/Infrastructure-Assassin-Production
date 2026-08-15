@@ -2,7 +2,7 @@
 .DS_Store
 .vscode/
 .idea/
-
+.claude/
 # --- Node.js & Dependencies ---
 node_modules/
 dist/
