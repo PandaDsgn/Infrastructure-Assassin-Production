@@ -30,17 +30,17 @@ export default function Homepage({ onEnter }) {
       </div>
 
       <div className="landing-hero">
-        <h1>
+        <h1 className="landing-brand">
           Infrastructure <span className="text-blood-red">Assassin</span>
         </h1>
-        <h2>Audit it. Flag it. Fix it.</h2>
-        <p>
+        <h2 className="landing-title">Audit it. Flag it. Fix it.</h2>
+        <p className="landing-sub">
           Continuously monitor your cloud estate, surface waste and threats
           in real time, and dispatch Keep / Update / Quarantine / Terminate
           actions — all with role-based approval built in.
         </p>
-        <button className="auth-btn landing-cta" onClick={onEnter}>
-          Sign In to Your Workspace
+        <button className="btn btn-primary landing-cta" onClick={onEnter}>
+          Sign In
         </button>
       </div>
     </div>
