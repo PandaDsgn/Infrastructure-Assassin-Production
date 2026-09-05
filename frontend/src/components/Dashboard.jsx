@@ -146,7 +146,6 @@ export default function Dashboard({
           className="theme-invert-icon"
           style={{ height: "20px", width: "20px" }}
         />{" "}
-        Agent
       </button>
 
       <header>
@@ -192,7 +191,7 @@ export default function Dashboard({
             )}
           </div>
           <button className="theme-toggle" onClick={toggleTheme}>
-            Evening Mode
+            Change Theme
           </button>
           <div className="user-role">{userRole}</div>
           <div className="user-name">{userName}</div>

@@ -1,0 +1,10 @@
+fastapi
+uvicorn[standard]
+asyncpg
+firebase-admin
+python-dotenv
+httpx
+redis
+google-genai
+pydantic
+certifi
