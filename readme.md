@@ -1,3 +1,5 @@
+<img src="./banner.svg" alt="Infrastructure Assassin" width="100%" />
+
 # Infrastructure Assassin
 
 [![Deployment Status](https://img.shields.io/badge/Deployment-Render-success?style=flat-square&logo=render)](#)
