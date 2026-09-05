@@ -1,7 +1,5 @@
 <img src="./banner.svg" alt="Infrastructure Assassin" width="100%" />
 
-# Infrastructure Assassin
-
 [![Deployment Status](https://img.shields.io/badge/Deployment-Render-success?style=flat-square&logo=render)](#)
 [![Security AI](https://img.shields.io/badge/AI_Engine-Multi--Tier_Waterfall-blue?style=flat-square)](#)
 [![Version](https://img.shields.io/badge/Version-Production-brightgreen?style=flat-square)](#)
